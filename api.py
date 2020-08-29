@@ -9,13 +9,14 @@ con = sqlite3.connect('database.db', check_same_thread=False)
 
 # API to book a ticket using a user’s name, phone number, and timings.
 @app.route('/api/bookticket', methods=['GET'])
-def insert_row():
+def bookTicket():
+	markExpired()
 	query_parameters = request.args
 	username = query_parameters.get("username")
 	phonenumber = query_parameters.get("phonenumber")
 	timing = query_parameters.get("timing")
 
-	if not (username or phonenumber or timing):
+	if(username==None or phonenumber==None or timing==None):
 		return "<h1>Error!!</h1><p>Some parameter's missing. Please pass the username, phonenumber and timing.</p>"
 
 	l = []
@@ -37,7 +38,8 @@ def insert_row():
 
 #API to update the ticket timing
 @app.route('/api/changetime', methods=['GET'])
-def updateTicket():
+def updateTicketTime():
+	markExpired()
 	query_parameters = request.args
 	time = query_parameters.get("timing")
 	id_ = query_parameters.get("id")
@@ -55,7 +57,8 @@ def updateTicket():
 
 #API to  view tickets of a particular time
 @app.route('/api/showtickets', methods=['GET'])
-def show_rows():
+def showTickets():
+	markExpired()
 	query_parameters = request.args
 	timing = query_parameters.get("timing")
 	if timing :
@@ -71,6 +74,7 @@ def show_rows():
 			dic["User's name"] = row[1]
 			dic["Phone Number"] = row[2]
 			dic["Timing"] = row[3]
+			dic['Staus'] = row[4]
 			results.append(dic)
 		return jsonify(results)
 	else:
@@ -96,6 +100,7 @@ def deleteTicket():
  # API to view the users details based on a ticket id
 @app.route('/api/showparticularticket', methods=['GET'])
 def viewUser():
+	markExpired()
 	query_parameters = request.args
 	id_ = query_parameters.get("id")
 	if not (id_ or timing):
@@ -112,6 +117,7 @@ def viewUser():
 		dic["User's name"] = row[1]
 		dic["Phone Number"] = row[2]
 		dic["Timing"] = row[3]
+		dic['Status'] = row[4]
 		result.append(dic)
 	return jsonify(result)
 
