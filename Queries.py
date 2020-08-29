@@ -18,7 +18,7 @@ def sql_connection():
 # Query to insert values to the talble
 def insert_row(con):
 	cursorObj = con.cursor()
-	query = "INSERT INTO tickets VALUES(null,'Pranjal', 7536954715, '13:00')";
+	query = "INSERT INTO tickets VALUES(null,'O', 8934580819, '14:00','active');"
 	try:
 		cursorObj.execute(query)
 		con.commit()
@@ -99,9 +99,21 @@ def viewUser(con,id_):
 		l.append(dic)
 	return l
 
+
+def markExpired(con):
+	cursorObj = con.cursor()
+	#query = "SELECT * from tickets WHERE timings <= time('now','localtime','-10 hours');"
+	query = "UPDATE tickets set status = 'expired' WHERE timings <= time('now','localtime','-10 hours')"
+	cursorObj.execute(query)
+	con.commit()
+	cursorObj.execute("SELECT * from tickets")
+	row = cursorObj.fetchall()
+	print(row)
+
 if __name__ == '__main__':
 	con = sql_connection()
-	insert_row(con)
+	markExpired(con)
+	#insert_row(con)
 	#print(show_rows(con,"15:45"))
 	#print(getCount(con,"15:45"))
 	#updateTicket(con,5,"15:50")

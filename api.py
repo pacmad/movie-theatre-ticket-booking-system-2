@@ -24,7 +24,7 @@ def insert_row():
 	l.append(timing)
 
 	cursorObj = con.cursor()
-	query = "INSERT INTO tickets VALUES(null,?,?,?);".format(username,phonenumber,timing)
+	query = "INSERT INTO tickets VALUES(null,?,?,?,'active');".format(username,phonenumber,timing)
 	try:
 		cursorObj.execute(query,l)
 		con.commit()
@@ -92,5 +92,40 @@ def deleteTicket():
 	except:
 		print("delete failed")
 		return "<h1>Some error occured!</h1>"
+
+ # API to view the users details based on a ticket id
+@app.route('/api/showparticularticket', methods=['GET'])
+def viewUser():
+	query_parameters = request.args
+	id_ = query_parameters.get("id")
+	if not (id_ or timing):
+		return "<h1>Error!!</h1><p>Some parameter's missing. Please pass the ticket id.</p>"
+	cursorObj = con.cursor()
+	cursorObj.execute("SELECT * from tickets where id=?",[id_])
+	rows = cursorObj.fetchall()
+	result = []
+	if(len(rows)==0):
+		return "<h1>No ticket found with with id {}</h1>".format(_id)
+	for row in rows:
+		dic = {}
+		dic["ticketid"] = row[0]
+		dic["User's name"] = row[1]
+		dic["Phone Number"] = row[2]
+		dic["Timing"] = row[3]
+		result.append(dic)
+	return jsonify(result)
+
+# Function to Mark a ticket as expired if there is a 
+# diff of 8 hours between the ticket timing and current time.
+def markExpired():
+	cursorObj = con.cursor()
+	#query = "SELECT * from tickets WHERE timings <= time('now','localtime','-10 hours');"
+	query = "UPDATE tickets set status = 'expired' WHERE timings <= time('now','localtime','-8 hours')"
+	cursorObj.execute(query)
+	con.commit()
+	# cursorObj.execute("SELECT * from tickets")
+	# row = cursorObj.fetchall()
+	# print(row)
+
 if __name__ == '__main__':
 	app.run()
