@@ -45,7 +45,7 @@ def insert_row():
 	l.append(username)
 	l.append(phonenumber)
 	l.append(timing)
-	
+
 	cursorObj = con.cursor()
 	query = "INSERT INTO tickets VALUES(null,?,?,?);".format(username,phonenumber,timing)
 	try:
@@ -58,5 +58,22 @@ def insert_row():
 	except:
 		print("Insert fail.")
 
+#API to update the ticket timing
+@app.route('/api/changetime', methods=['GET'])
+def updateTicket():
+	query_parameters = request.args
+	time = query_parameters.get("timing")
+	id_ = query_parameters.get("id")
+	if not (id_ or timing):
+		return "<h1>Error!!</h1><p>Some parameter's missing. Please pass the ticket id and new timing.</p>"
+	cursorObj = con.cursor()
+	try:
+		cursorObj.execute("UPDATE tickets set timings=? where id=?",(time,id_))
+		con.commit()
+		print("update successfully done")
+		return "<h1>Your ticket timing is updated to {}</h1><p>Thank you !</p>".format(time)
+	except:
+		print("update failed")
+		return "<h1>Some error occured!</h1>"
 if __name__ == '__main__':
 	app.run()
