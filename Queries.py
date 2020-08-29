@@ -18,7 +18,7 @@ def sql_connection():
 # Query to insert values to the talble
 def insert_row(con):
 	cursorObj = con.cursor()
-	query = "INSERT INTO tickets VALUES(null,'xyz', 9897456872, '15:45')";
+	query = "INSERT INTO tickets VALUES(null,'Pranjal', 7536954715, '13:00')";
 	try:
 		cursorObj.execute(query)
 		con.commit()
@@ -101,13 +101,13 @@ def viewUser(con,id_):
 
 if __name__ == '__main__':
 	con = sql_connection()
-	#insert_row(con)
+	insert_row(con)
 	#print(show_rows(con,"15:45"))
 	#print(getCount(con,"15:45"))
 	#updateTicket(con,5,"15:50")
 	#deleteTicket(con,5)
 	#showALLRows(con)
-	print(viewUser(con,4))
+	#print(viewUser(con,4))
 	#print(lastRowId(con))
 
 

@@ -17,7 +17,7 @@ def sql_connection():
 def sql_table(con):
 
     cursorObj = con.cursor()
-    query = "CREATE TABLE tickets(id integer PRIMARY KEY, username varchar(50), phonenumber integer, timings varchar(6))";
+    query = "CREATE TABLE tickets(id integer PRIMARY KEY, username varchar(50), phonenumber integer, timings varchar(6),status varchar(10))";
     try:
     	cursorObj.execute(query)
     	print("Table created successfully!")
