@@ -19,6 +19,10 @@ def bookTicket():
 	if(username==None or phonenumber==None or timing==None):
 		return "<h1>Error!!</h1><p>Some parameter's missing. Please pass the username, phonenumber and timing.</p>"
 
+	current_ticket_count = getCount(timing)
+	if(current_ticket_count>=20):
+		return "<h1>Sorry!</h1><p>This show is full. Please book for other timing.</p>"
+
 	l = []
 	l.append(username)
 	l.append(phonenumber)
@@ -43,8 +47,12 @@ def updateTicketTime():
 	query_parameters = request.args
 	time = query_parameters.get("timing")
 	id_ = query_parameters.get("id")
-	if not (id_ or timing):
+	if(id_==None or time==None):
 		return "<h1>Error!!</h1><p>Some parameter's missing. Please pass the ticket id and new timing.</p>"
+
+	current_ticket_count = getCount(time)
+	if(current_ticket_count>=20):
+		return "<h1>Sorry!</h1><p>This show is full. Please book for other timing.</p>"
 	cursorObj = con.cursor()
 	try:
 		cursorObj.execute("UPDATE tickets set timings=? where id=?",(time,id_))
@@ -85,7 +93,7 @@ def showTickets():
 def deleteTicket():
 	query_parameters = request.args
 	id_ = query_parameters.get("id")
-	if not (id_ or timing):
+	if(id_== None):
 		return "<h1>Error!!</h1><p>Some parameter's missing. Please pass the ticket id.</p>"
 	cursorObj = con.cursor()
 	try:
@@ -103,7 +111,7 @@ def viewUser():
 	markExpired()
 	query_parameters = request.args
 	id_ = query_parameters.get("id")
-	if not (id_ or timing):
+	if(id_== None):
 		return "<h1>Error!!</h1><p>Some parameter's missing. Please pass the ticket id.</p>"
 	cursorObj = con.cursor()
 	cursorObj.execute("SELECT * from tickets where id=?",[id_])
@@ -125,13 +133,15 @@ def viewUser():
 # diff of 8 hours between the ticket timing and current time.
 def markExpired():
 	cursorObj = con.cursor()
-	#query = "SELECT * from tickets WHERE timings <= time('now','localtime','-10 hours');"
 	query = "UPDATE tickets set status = 'expired' WHERE timings <= time('now','localtime','-8 hours')"
 	cursorObj.execute(query)
 	con.commit()
-	# cursorObj.execute("SELECT * from tickets")
-	# row = cursorObj.fetchall()
-	# print(row)
+
+#Query to get the count of tickets at a particular time
+def getCount(time):
+	cursorObj = con.cursor()
+	cursorObj.execute("SELECT count(*) from tickets where timings=?",[time])
+	return cursorObj.fetchall()[0][0]
 
 if __name__ == '__main__':
 	app.run()
