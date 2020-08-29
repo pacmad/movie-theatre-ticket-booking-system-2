@@ -8,7 +8,7 @@ app.config["DEBUG"] = True
 con = sqlite3.connect('database.db', check_same_thread=False)
 
 #API to  view tickets of a particular time
-@app.route('/api/bookticket', methods=['GET'])
+@app.route('/api/showtickets', methods=['GET'])
 def show_rows():
 	query_parameters = request.args
 	timing = query_parameters.get("timing")
@@ -30,6 +30,33 @@ def show_rows():
 	else:
 		return "<h1>Error!!</h1><p>Time parameter is not provided.</p>"
 
+# API to book a ticket using a user’s name, phone number, and timings.
+@app.route('/api/bookticket', methods=['GET'])
+def insert_row():
+	query_parameters = request.args
+	username = query_parameters.get("username")
+	phonenumber = query_parameters.get("phonenumber")
+	timing = query_parameters.get("timing")
+
+	if not (username or phonenumber or timing):
+		return "<h1>Error!!</h1><p>Some parameter's missing. Please pass the username, phonenumber and timing.</p>"
+
+	l = []
+	l.append(username)
+	l.append(phonenumber)
+	l.append(timing)
+	
+	cursorObj = con.cursor()
+	query = "INSERT INTO tickets VALUES(null,?,?,?);".format(username,phonenumber,timing)
+	try:
+		cursorObj.execute(query,l)
+		con.commit()
+		print("Inserted!")
+		rowid = cursorObj.lastrowid
+		print("Last row id:",rowid)
+		return "<h1>Your ticket id is {}</h1><p>Thank you for the booking.</p>".format(rowid)
+	except:
+		print("Insert fail.")
 
 if __name__ == '__main__':
 	app.run()
