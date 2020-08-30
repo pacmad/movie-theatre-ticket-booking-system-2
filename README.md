@@ -16,10 +16,32 @@ Database - SQLLite
 - Mark a ticket as expired if there is a diff of 8 hours between the ticket timing and current time.
 - For a particular timing, a maximum of 20 tickets can be booked.
 
-### Prerequisites
+## Prerequisites
 
 ```
 Python3
 Flask
 Sqllite
 ```
+
+## Endpoints
+
+1. An endpoint to book a ticket using a user’s name, phone number, and timings.
+
+**Endpoint**-> http://127.0.0.1:5000/api/bookticket
+
+*Parameters*
+```
+username - User's name
+phonenumber - User's phonenumber
+timing - time in HH:MM format
+
+example: 
+http://127.0.0.1:5000/api/bookticket?username=John&phonenumber=1234567890&timing=15:30
+```
+
+- returns the ticket ID of the booked ticket.
+- cannot book if 20 tickets are already booked for that show timing.
+- return error if any parameter is not passed during api call.
+
+
