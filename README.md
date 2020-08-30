@@ -114,6 +114,10 @@ http://127.0.0.1:5000/api/showparticularticket?id=10
 - returns error if there is no ticket with that id.
 - JSON object contains -> ticket id, User's name, Phone Number.
 
+6. **Mark a ticket as expired if there is a diff of 8 hours between the ticket timing and current time.**
+
+Tickets with a time difference of more than 8 hours from current time are marked as expired.
+
 ## Database structure
 
 SQLLITE is used as the relational database to store the data.
