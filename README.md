@@ -109,6 +109,25 @@ http://127.0.0.1:5000/api/showparticularticket?id=10
 - returns error if there is no ticket with that id.
 - JSON object contains -> ticket id, User's name, Phone Number.
 
+## Database structure
 
+SQLLITE is used as the relational database to store the data.
 
+Table name is **tickets**.
 
+Table structure:
+- *id* integer primary key
+- *username* varchar
+- *phonenumber* integer
+- *timings* varchar
+- *status* varchar
+
+id is auto incremented
+
+username stores the user's name
+
+phonenumber stores the user's phonenumber
+
+timings stores the show time of the ticket in HH:MM format
+
+status keeps the record if the ticket is **active** or **expired**
