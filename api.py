@@ -133,9 +133,17 @@ def viewUser():
 # diff of 8 hours between the ticket timing and current time.
 def markExpired():
 	cursorObj = con.cursor()
-	query = "UPDATE tickets set status = 'expired' WHERE timings <= time('now','localtime','-8 hours')"
+	query = "UPDATE tickets set status = 'expired' WHERE timings <= time('now','localtime','-8 hours');"
 	cursorObj.execute(query)
 	con.commit()
+
+# Function to delete expired
+def deleteExpired():
+	cursorObj = con.cursor()
+	query = "DELETE FROM tickets where status='expired';"
+	cursorObj.execute(query)
+	con.commit()
+
 
 #Query to get the count of tickets at a particular time
 def getCount(time):
