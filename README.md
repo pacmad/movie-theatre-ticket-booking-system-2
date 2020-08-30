@@ -139,4 +139,4 @@ status keeps the record if the ticket is **active** or **expired**
 
 ## Postman API Testing Screenshots
 
-
+Folder **Api test screenshots** contains postman api testing screenshots for each endpoint.
