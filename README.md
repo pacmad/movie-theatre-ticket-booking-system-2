@@ -93,4 +93,22 @@ http://127.0.0.1:5000/api/deleteticket?id=10
 - return error if id parameter is not passed during api call.
 - returns a delete successfull message.
 
+5. **An endpoint to view the user’s details based on the ticket id.**
+
+
+**Endpoint**-> http://127.0.0.1:5000/api/showparticularticket
+
+*Parameters*
+```
+id = Ticket ID
+
+example: 
+http://127.0.0.1:5000/api/showparticularticket?id=10
+```
+- returns a JSON object containing the users details.
+- returns error if there is no ticket with that id.
+- JSON object contains -> ticket id, User's name, Phone Number.
+
+
+
 
