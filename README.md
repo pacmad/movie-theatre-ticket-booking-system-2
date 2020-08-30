@@ -26,7 +26,7 @@ Sqllite
 
 ## Endpoints
 
-1. An endpoint to book a ticket using a user’s name, phone number, and timings.
+1. **An endpoint to book a ticket using a user’s name, phone number, and timings.**
 
 **Endpoint**-> http://127.0.0.1:5000/api/bookticket
 
@@ -44,7 +44,7 @@ http://127.0.0.1:5000/api/bookticket?username=John&phonenumber=1234567890&timing
 - cannot book if 20 tickets are already booked for that show timing.
 - return error if any parameter is not passed during api call.
 
-2. An endpoint to update a ticket timing.
+2. **An endpoint to update a ticket timing.**
 
 **Endpoint**-> http://127.0.0.1:5000/api/changetime
 
@@ -61,7 +61,19 @@ http://127.0.0.1:5000/api/changetime?id=15&timing=16:30
 - cannot update if 20 tickets are already booked for that show timing.
 - return error if any parameter is not passed during api call.
 
-3. An endpoint to view all the tickets for a particular time.
+3. **An endpoint to view all the tickets for a particular time.**
 
 
+**Endpoint**-> http://127.0.0.1:5000/api/showtickets
+
+*Parameters*
+```
+timing - time in HH:MM format
+
+example: 
+http://127.0.0.1:5000/api/showtickets?timing=16:30
+```
+- returns all the tickets for that particular time in JSON format.
+- Each json object contains -> ticketid, User's Name, Phone Number, Timing, Status.
+- return error if timing parameter is not passed during api call.
 
