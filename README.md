@@ -44,4 +44,24 @@ http://127.0.0.1:5000/api/bookticket?username=John&phonenumber=1234567890&timing
 - cannot book if 20 tickets are already booked for that show timing.
 - return error if any parameter is not passed during api call.
 
+2. An endpoint to update a ticket timing.
+
+**Endpoint**-> http://127.0.0.1:5000/api/changetime
+
+*Parameters*
+```
+id - Ticket ID
+timing - new time in HH:MM format
+
+example: 
+http://127.0.0.1:5000/api/changetime?id=15&timing=16:30
+```
+
+- updates the ticket timing if ticket id matches and show is not full for that timing.
+- cannot update if 20 tickets are already booked for that show timing.
+- return error if any parameter is not passed during api call.
+
+3. An endpoint to view all the tickets for a particular time.
+
+
 
