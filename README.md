@@ -77,3 +77,20 @@ http://127.0.0.1:5000/api/showtickets?timing=16:30
 - Each json object contains -> ticketid, User's Name, Phone Number, Timing, Status.
 - return error if timing parameter is not passed during api call.
 
+4. **An endpoint to delete a particular ticket.**
+
+
+**Endpoint**-> http://127.0.0.1:5000/api/deleteticket
+
+*Parameters*
+```
+id = Ticket ID
+
+example: 
+http://127.0.0.1:5000/api/deleteticket?id=10
+```
+- delete the ticket with given ticket ID if exists.
+- return error if id parameter is not passed during api call.
+- returns a delete successfull message.
+
+
