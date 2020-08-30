@@ -23,6 +23,11 @@ Python3
 Flask
 Sqllite
 ```
+## Code files
+
+File name-> **api.py** contains the python code for the api.
+
+File name-> **tablecreate** contains code to create the table in sqllite database.
 
 ## Endpoints
 
@@ -131,3 +136,7 @@ phonenumber stores the user's phonenumber
 timings stores the show time of the ticket in HH:MM format
 
 status keeps the record if the ticket is **active** or **expired**
+
+## Postman API Testing Screenshots
+
+
