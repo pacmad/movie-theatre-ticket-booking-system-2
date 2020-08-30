@@ -118,14 +118,14 @@ def viewUser():
 	rows = cursorObj.fetchall()
 	result = []
 	if(len(rows)==0):
-		return "<h1>No ticket found with with id {}</h1>".format(_id)
+		return "<h1>No ticket found with id {}</h1>".format(id_)
 	for row in rows:
 		dic = {}
 		dic["ticketid"] = row[0]
 		dic["User's name"] = row[1]
 		dic["Phone Number"] = row[2]
-		dic["Timing"] = row[3]
-		dic['Status'] = row[4]
+		#dic["Timing"] = row[3]
+		#dic['Status'] = row[4]
 		result.append(dic)
 	return jsonify(result)
 
